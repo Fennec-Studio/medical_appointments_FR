@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
-import { DoctorService } from '../../services/doctor.service';
-import { Doctor } from '../../../shared/interfaces/Doctor';
+import { DoctorService } from '../services/doctor.service';
+import { Doctor } from '../shared/interfaces/Doctor';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-dashboard',
   imports: [
-    CommonModule
+    CommonModule,
   ],
   standalone: true,
-  templateUrl: './home.component.html',
+  templateUrl: './dashboard.component.html',
 })
-export class HomeComponent {
+export class DashboardComponent {
   doctors: Doctor[] = [];
 
   constructor(
