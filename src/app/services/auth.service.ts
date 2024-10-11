@@ -14,7 +14,7 @@ export class AuthService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { email, password };
 
-    return this.http.post<any>(environment.API_URL, body, { headers }).pipe(
+    return this.http.post<any>(environment.API_URL + 'users/login', body, { headers }).pipe(
       map((response) => {
         if (response.status === 200) {
           this.saveCredentials(response.user as AuthModel);

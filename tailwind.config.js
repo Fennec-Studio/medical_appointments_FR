@@ -12,6 +12,11 @@ module.exports = {
         'backgroundBlue': '#E6F2FF',
         'whiteFixed': '#FDFDFF',
         'primaryBlueText': '#074270',
+        'navbarBlue': '#08506B',
+      },
+      fontFamily: {
+        'IBM': ['IBM Plex Sans', 'sans-serif'],
+        'Roboto': ['Roboto', 'sans-serif'],
       }
     },
   },
