@@ -30,5 +30,10 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    if (this._authService.isLogged()) {
+      window.location.href = '/dashboard';
+    }
+  }
 
 }
