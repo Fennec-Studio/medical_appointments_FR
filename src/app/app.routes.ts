@@ -1,16 +1,26 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './panel/dashboard.component';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
   {
     path: '',
-    title: 'Dashboard',
-    component: DashboardComponent
+    title: 'Genera tu cita',
+    component: HomeComponent
+  },
+  {
+    path: 'panel',
+    title: 'Panel principal',
+    loadComponent: () => import('./panel/dashboard.component').then((m) => m.DashboardComponent)
+  },
+  {
+    path: 'appointments',
+    title: 'Gestión de Citas',
+    loadComponent: () => import('./pages/appointments/appointments.component').then((m) => m.AppointmentsComponent)
   },
   {
     path: 'login',
-    title: 'Acceder',
+    title: 'Acceder al sitio',
     component: LoginComponent
   },
   {
