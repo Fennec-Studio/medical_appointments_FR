@@ -1,0 +1,101 @@
+<div class="flex flex-col justify-center font-IBM bg-whiteFixed rounded-md shadow-sm my-10 mx-20 p-6 space-y-4">
+  <div>
+    <h2 class="text-3xl font-medium">Listado de citas</h2>
+    <p class="text-sm text-slate-500">A continuación se muestra un listado de las citas agendadas y atendidas.</p>
+  </div>
+  <div>
+    <div class="relative overflow-x-auto ">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+              <tr>
+                  <th scope="col" class="px-6 py-3">
+                    Paciente
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Doctor
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Fecha
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Estado
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Acciones
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+            @for (appointment of showContentPage(pageIdx); track $index) {
+              <tr class="bg-white border-b hover:bg-gray-50">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    {{ appointment.patient }}
+                </th>
+                <td class="px-6 py-4">
+                    {{ appointment.doctor }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ appointment.date }}
+                </td>
+                <td class="px-6 py-4">
+                  <span
+                    [ngClass]="{
+                      'bg-green-200 text-green-800': appointment.status === 0,
+                      'bg-blue-200 text-blue-800': appointment.status === 1,
+                      'bg-red-200 text-red-800': appointment.status === 2
+                    }"
+                    class=" text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                    {{ appointment.status === 0 ? 'Pendiente' : appointment.status === 1 ? 'Atendida' : 'Cancelada' }}
+                  </span>
+                </td>
+                <td class="flex flex-row space-x-2 px-6 py-2">
+                  <button type="button" class="text-white bg-primaryGreen hover:bg-secondaryGreen focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center">
+                    <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="text-sm p-2 text-center inline-flex items-center text-white bg-orange-300 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg">
+                    <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="text-sm p-2 text-center inline-flex items-center text-white bg-red-400 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg">
+                    <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="flex justify-end">
+    <nav aria-label="Page navigation example">
+      <ul class="inline-flex -space-x-px text-sm">
+        <li>
+          <button
+            (click)="updatePageIdx(pageIdx - 1)"
+            [disabled]="pageIdx === 1"
+            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">Anterior</button>
+        </li>
+        @for (item of [].constructor(pages); track $index) {
+          <li>
+            <button
+              [ngClass]="{'text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700': ($index + 1) === pageIdx}"
+              (click)="updatePageIdx($index + 1)"
+              class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{ ($index + 1) }}</button>
+            </li>
+        }
+        <li>
+          <button
+            (click)="updatePageIdx(pageIdx + 1)"
+            [disabled]="pageIdx === pages"
+            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">Siguiente</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

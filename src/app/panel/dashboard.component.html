@@ -1,1 +1,34 @@
-<p>{{ doctors }}</p>
+<div class="font-Roboto grid grid-flow-col grid-cols-5 gap-2 p-4 select-none">
+  <div class="bg-whiteFixed p-6 rounded-md shadow-sm min-w-72 flex flex-row">
+    <div class="flex flex-col">
+      <p class="font-medium text-slate-400">Cantidad de pacientes</p>
+      <p class="text-7xl font-bold text-red-400">{{ dashboardCounter.patients || 0}}</p>
+    </div>
+  </div>
+  <div class="bg-whiteFixed p-6 rounded-md shadow-sm min-w-72 flex flex-row">
+    <div class="flex flex-col">
+      <p class="font-medium text-slate-400">Cantidad de citas</p>
+      <p class="text-7xl font-bold text-blue-400">{{ dashboardCounter.appointments || 0 }}</p>
+    </div>
+  </div>
+  <div class="bg-whiteFixed p-6 rounded-md shadow-sm min-w-72 flex flex-row">
+    <div class="flex flex-col">
+      <p class="font-medium text-slate-400">Cantidad de doctores</p>
+      <p class="text-7xl font-bold text-teal-400">{{ dashboardCounter.doctors || 0 }}</p>
+    </div>
+  </div>
+  <div class="bg-whiteFixed p-6 rounded-md shadow-sm min-w-72 flex flex-row">
+    <div class="flex flex-col">
+      <p class="font-medium text-slate-400">Cantidad de especialidades</p>
+      <p class="text-7xl font-bold text-cyan-400">{{ dashboardCounter.specialties || 0 }}</p>
+    </div>
+  </div>
+  <div class="bg-whiteFixed p-6 rounded-md shadow-sm min-w-72 flex flex-row">
+    <div class="flex flex-col">
+      <p class="font-medium text-slate-400">Cantidad de usuarios</p>
+      <p class="text-7xl font-bold text-purple-400">{{ dashboardCounter.users || 0 }}</p>
+    </div>
+  </div>
+</div>
+
+<p>{{ dashboardCounter }}</p>

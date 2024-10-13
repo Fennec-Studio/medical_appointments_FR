@@ -22,7 +22,7 @@ export class AppComponent {
   ngOnInit(): void {
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.showNavbar = event.url !== '/login';
+        this.showNavbar = event.url !== '/login' && event.url !== '/register' && event.url !== '/';
       }
     });
   }
