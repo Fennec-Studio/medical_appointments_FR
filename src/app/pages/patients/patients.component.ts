@@ -16,7 +16,6 @@ export class PatientsComponent {
   patientList: Patient[] = [];
   pages = 0;
   pageIdx = 1;
-  tips: boolean[] = [false, false, false, false]
 
   constructor(
     private _patientService: PatientService,
@@ -41,7 +40,6 @@ export class PatientsComponent {
   }
 
   paginationSetup() {
-    console.log(this.patientList);
     if (this.patientList.length === 0) {
       this.pages = 1;
     }
@@ -55,9 +53,5 @@ export class PatientsComponent {
   showContentPage(pageIdx: number): Patient[] {
     this.pageIdx = pageIdx;
     return this.patientList.slice((this.pageIdx - 1) * 5, this.pageIdx * 5);
-  }
-
-  showTip(tip: number) {
-
   }
 }
