@@ -5,22 +5,22 @@ import { HomeComponent } from './pages/home/home.component';
 export const routes: Routes = [
   {
     path: '',
-    title: 'Inicio',
+    title: 'Genera tu cita',
     component: HomeComponent
   },
   {
     path: 'panel',
-    title: 'Dashboard',
+    title: 'Panel principal',
     loadComponent: () => import('./panel/dashboard.component').then((m) => m.DashboardComponent)
   },
   {
     path: 'appointments',
-    title: 'Citas',
+    title: 'Gestión de Citas',
     loadComponent: () => import('./pages/appointments/appointments.component').then((m) => m.AppointmentsComponent)
   },
   {
     path: 'login',
-    title: 'Acceder',
+    title: 'Acceder al sitio',
     component: LoginComponent
   },
   {
