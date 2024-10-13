@@ -19,6 +19,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/appointments/appointments.component').then((m) => m.AppointmentsComponent)
   },
   {
+    path: 'patients',
+    title: 'Gestión de Pacientes',
+    loadComponent: () => import('./pages/patients/patients.component').then((m) => m.PatientsComponent)
+  },
+  {
     path: 'login',
     title: 'Acceder al sitio',
     component: LoginComponent

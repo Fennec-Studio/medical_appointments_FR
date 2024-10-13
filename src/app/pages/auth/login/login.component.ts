@@ -23,7 +23,7 @@ export class LoginComponent {
   onLoginFormSubmit(): void {
     this._authService.login(this.email, this.password).subscribe(response => {
       if (response.success) {
-        window.location.href = '/dashboard';
+        window.location.href = '/panel';
       } else {
         alert(response.message);
       }
@@ -32,7 +32,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
     if (this._authService.isLogged()) {
-      window.location.href = '/dashboard';
+      window.location.href = '/panel';
     }
   }
 
