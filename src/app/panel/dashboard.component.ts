@@ -25,7 +25,7 @@ export class DashboardComponent {
 
   ngOnInit() {
     if (!this._authService.isLogged()) {
-      window.location.href = '/login';
+      window.location.href = '/';
     } else {
       this.retrieveData();
     }
