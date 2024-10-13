@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-main-navbar',
@@ -10,5 +11,9 @@ import { RouterModule } from '@angular/router';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
+  constructor(private _authService: AuthService) { }
 
+  logout(): void {
+    this._authService.logout();
+  }
 }
