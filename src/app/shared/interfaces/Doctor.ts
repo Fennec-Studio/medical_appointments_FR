@@ -10,7 +10,7 @@ export interface Doctor {
   license: string;
   created_at: Date;
   updated_at: Date;
-  speciality?: Speciality;
+  speciality?: string;
 }
 
 interface Speciality {
