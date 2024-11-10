@@ -24,6 +24,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/patients/patients.component').then((m) => m.PatientsComponent)
   },
   {
+    path: 'doctors',
+    title: 'Gestión de Doctores',
+    loadComponent: () => import('./pages/doctors/doctors.component').then((m) => m.DoctorsComponent)
+  },
+  {
     path: 'login',
     title: 'Acceder al sitio',
     component: LoginComponent
