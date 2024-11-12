@@ -4,6 +4,7 @@ import { Doctor } from '../shared/interfaces/Doctor';
 import { CommonModule } from '@angular/common';
 import { DashboardCounter, ToolService } from '../services/tool.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,25 +15,20 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  // doctors: Doctor[] = [];
   dashboardCounter: DashboardCounter = {} as DashboardCounter;
 
   constructor(
-    // private _doctorService:DoctorService,
     private _authService: AuthService,
-    private _dashboardService: ToolService
+    private _dashboardService: ToolService,
+    private _router: Router,
   ) {}
 
   ngOnInit() {
     if (!this._authService.isLogged()) {
-      window.location.href = '/';
+      this._router.navigate(['/']);
     } else {
       this.retrieveData();
     }
-    // this._doctorService.getDoctors().
-    //   subscribe((doctors: Doctor[]) => {
-    //     this.doctors = doctors;
-    //   });
   }
 
   async retrieveData() {
