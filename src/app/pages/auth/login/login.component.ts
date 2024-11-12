@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 
@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login',
   standalone: true,
   imports: [
-    RouterModule,
     FormsModule,
   ],
   templateUrl: './login.component.html',
@@ -18,12 +17,13 @@ export class LoginComponent {
 
   constructor(
     private _authService: AuthService,
+    private _router: Router,
   ) { }
 
   onLoginFormSubmit(): void {
     this._authService.login(this.email, this.password).subscribe(response => {
       if (response.success) {
-        window.location.href = '/panel';
+        this._router.navigate(['/panel']);
       } else {
         alert(response.message);
       }
@@ -32,7 +32,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
     if (this._authService.isLogged()) {
-      window.location.href = '/panel';
+      this._router.navigate(['/panel']);
     }
   }
 

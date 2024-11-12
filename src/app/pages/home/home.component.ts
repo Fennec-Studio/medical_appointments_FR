@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +11,14 @@ import { RouterModule } from '@angular/router';
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  constructor(private _authService: AuthService) {}
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+  ) {}
 
   ngOnInit(): void {
     if(this._authService.isLogged()) {
-      window.location.href = '/panel';
+      this._router.navigate(['/panel']);
     }
   }
 }

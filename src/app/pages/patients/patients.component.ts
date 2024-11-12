@@ -3,6 +3,7 @@ import { Patient } from '../../shared/interfaces/Patient';
 import { PatientService } from '../../services/patient.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patients',
@@ -19,13 +20,14 @@ export class PatientsComponent {
 
   constructor(
     private _patientService: PatientService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _router: Router,
   ) {}
 
 
   ngOnInit() {
     if (!this._authService.isLogged()) {
-      window.location.href = '/';
+      this._router.navigate(['/']);
     } else {
       this.retrieveData();
     }

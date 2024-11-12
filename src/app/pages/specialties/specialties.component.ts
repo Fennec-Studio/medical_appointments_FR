@@ -3,6 +3,7 @@ import { Specialty } from '../../shared/interfaces/Specialty';
 import { SpecialtyService } from '../../services/specialty.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-specialties',
@@ -19,13 +20,14 @@ export class SpecialtiesComponent {
 
   constructor(
     private _specialtyService: SpecialtyService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _router: Router,
   ) {}
 
 
   ngOnInit() {
     if (!this._authService.isLogged()) {
-      window.location.href = '/';
+      this._router.navigate(['/']);
     } else {
       this.retrieveData();
     }

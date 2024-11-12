@@ -3,6 +3,7 @@ import { Doctor } from '../../shared/interfaces/Doctor';
 import { DoctorService } from '../../services/doctor.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-doctors',
@@ -19,13 +20,14 @@ export class DoctorsComponent {
 
   constructor(
     private _doctorService: DoctorService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _router: Router,
   ) {}
 
 
   ngOnInit() {
     if (!this._authService.isLogged()) {
-      window.location.href = '/';
+      this._router.navigate(['/']);
     } else {
       this.retrieveData();
     }

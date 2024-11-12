@@ -3,6 +3,7 @@ import { AppointmentService } from '../../services/appointment.service';
 import { AuthService } from '../../services/auth.service';
 import { Appointment } from '../../shared/interfaces/Appointment';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-appointments',
@@ -19,13 +20,14 @@ export class AppointmentsComponent {
 
   constructor(
     private _appointmentService: AppointmentService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _router: Router,
   ) {}
 
 
   ngOnInit() {
     if (!this._authService.isLogged()) {
-      window.location.href = '/';
+      this._router.navigate(['/']);
     } else {
       this.retrieveData();
     }
