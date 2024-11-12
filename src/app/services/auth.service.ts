@@ -3,12 +3,16 @@ import { environment } from '../../environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private _router: Router,
+  ) { }
 
   login(email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -53,7 +57,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('user');
-    window.location.reload();
+    this._router.navigate(['/']);
   }
 }
 interface AuthModel {
