@@ -17,4 +17,20 @@ export class AppointmentService {
       }))
     );
   }
+
+  updateAppointmentStatus(appointment: Appointment): Observable<any> {
+    return this._httpClient.put(environment.API_URL + 'appointments/' + appointment.id + '/status', appointment)
+      .pipe((map((response) => {
+        return response;
+      }))
+    );
+  }
+
+  deleteAppointment(id: number): Observable<any> {
+    return this._httpClient.delete(environment.API_URL + 'appointments/' + id)
+      .pipe((map((response) => {
+        return response;
+      }))
+    );
+  }
 }

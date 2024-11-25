@@ -1,3 +1,6 @@
+import { Doctor } from "./Doctor";
+import { Patient } from "./Patient";
+
 export interface Appointment {
   id: number;
   patient_id: number;
@@ -7,6 +10,6 @@ export interface Appointment {
   status: number;
   created_at: Date;
   updated_at: Date;
-  doctor: string;
-  patient: string;
+  doctor?: Doctor;
+  patient?: Patient;
 }
