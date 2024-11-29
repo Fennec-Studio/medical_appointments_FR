@@ -18,6 +18,9 @@ export class PatientsComponent {
   pages = 0;
   pageIdx = 1;
 
+  showModal:boolean = false;
+  patientToUpdate:Patient = {} as Patient;
+
   constructor(
     private _patientService: PatientService,
     private _authService: AuthService,
@@ -56,4 +59,19 @@ export class PatientsComponent {
     this.pageIdx = pageIdx;
     return this.patientList.slice((this.pageIdx - 1) * 5, this.pageIdx * 5);
   }
+
+  toggleModal(idSelected?: number) {
+    if(idSelected){
+      this.patientToUpdate = this.patientList.find(patient => patient.id == idSelected) as Patient;
+    }
+    this.showModal = !this.showModal;
+  }
+
+  async deletePatient(id: number) {
+    await this._patientService.deletePatient(id)
+      .subscribe(() => {
+        this.retrieveData();
+      });
+  }
+
 }

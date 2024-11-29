@@ -17,4 +17,12 @@ export class PatientService {
       }))
     );
   }
+
+  deletePatient(id: number): Observable<any> {
+    return this._httpClient.delete(environment.API_URL + 'patients/' + id)
+      .pipe((map((response) => {
+        return response;
+      }))
+    );
+  }
 }

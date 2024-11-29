@@ -49,7 +49,9 @@
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                     </svg>
                   </button>
-                  <button type="button" class="text-sm p-2 text-center inline-flex items-center text-white bg-orange-300 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg">
+                  <button 
+                  (click)="toggleModal(doctor.id)"
+                    type="button" class="text-sm p-2 text-center inline-flex items-center text-white bg-orange-300 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg">
                     <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
                     </svg>
@@ -94,3 +96,69 @@
     </nav>
   </div>
 </div>
+
+@if (doctorToUpdate !== null) {
+  <div
+    [ngClass]="{'hidden': !showModal}"
+    class="w-full bg-black bg-opacity-70 h-screen z-50 fixed inset-0 flex items-center">
+    <div class="container mx-auto flex flex-col space-y-4 bg-white max-w-4xl h-auto rounded-md p-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-IBM font-semibold">Editar información del doctor</h2>
+        <button
+          (click)="toggleModal()"
+          class="text-white hover:bg-gray-300 border font-medium rounded-lg p-2 flex items-center">
+            <svg class="w-6 h-6 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+            </svg>
+        </button>
+      </div>
+
+      <div class="flex flex-row space-x-4">
+        <div class="w-full">
+          <label for="firstName_doctor" class="block mb-1 text-sm font-medium text-gray-900">Apellidos doctor</label>
+          <input type="text" id="firstName_doctor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese los apellidos del doctor" [value]="doctorToUpdate.last_name">
+        </div>
+        <div class="w-full">
+          <label for="lastName_doctor" class="block mb-1 text-sm font-medium text-gray-900">Nombre(s) doctor</label>
+          <input type="text" id="lastName_doctor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese nombre(s) del doctor" [value]="doctorToUpdate.first_name">
+        </div>
+      </div>
+
+      <div class="flex flex-row space-x-4">
+        <div class="w-full">
+          <label for="room_doctor" class="block mb-1 text-sm font-medium text-gray-900">Sala doctor</label>
+          <input type="text" id="room_doctor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese la sala del doctor" [value]="doctorToUpdate.room">
+        </div>
+        <div class="w-full">
+          <label for="specialty_doctor" class="block mb-1 text-sm font-medium text-gray-900">Especialidad doctor</label>
+            <select id="specialty_doctor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" [value]="doctorToUpdate.speciality_id">
+              @for(specialty of specialitySelect; track $index){
+                <option value="{{specialty.id}}">{{specialty.name}}</option>
+              }
+            </select> 
+        </div>
+      </div>
+
+      <div class="flex flex-row space-x-4">
+        <div class="w-full">
+          <label for="license_doctor" class="block mb-1 text-sm font-medium text-gray-900">Licencia doctor</label>
+          <input type="text" id="license_doctor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese la licencia del doctor" [value]="doctorToUpdate.license">
+        </div>
+      </div>
+
+      <div class="flex flex-row justify-end space-x-4">
+        <button
+          (click)="toggleModal()"
+          type="button" class="text-red-600 border-red-600 hover:bg-red-500 hover:text-white border font-medium rounded-lg text-sm px-5 py-2.5">
+          Cancelar
+        </button>
+        <button
+          (click)="toggleModal()"
+          type="button" class="text-white bg-sky-800 hover:bg-sky-500 font-medium rounded-lg text-sm px-5 py-2.5">
+          Guardar
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

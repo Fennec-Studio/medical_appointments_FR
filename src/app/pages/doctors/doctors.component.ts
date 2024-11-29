@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { Doctor } from '../../shared/interfaces/Doctor';
+import { Specialty } from '../../shared/interfaces/Specialty';
 import { DoctorService } from '../../services/doctor.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { SpecialtyService } from '../../services/specialty.service';
 
 @Component({
   selector: 'app-doctors',
@@ -18,8 +20,13 @@ export class DoctorsComponent {
   pages = 0;
   pageIdx = 1;
 
+  showModal:boolean = false;
+  doctorToUpdate: Doctor = {} as Doctor;
+  specialitySelect: Specialty[] = [];
+
   constructor(
     private _doctorService: DoctorService,
+    private _specialtyService: SpecialtyService,
     private _authService: AuthService,
     private _router: Router,
   ) {}
@@ -56,4 +63,17 @@ export class DoctorsComponent {
     this.pageIdx = pageIdx;
     return this.doctorList.slice((this.pageIdx - 1) * 5, this.pageIdx * 5);
   }
+
+  async toggleModal(idSelected?: number) {
+    if(idSelected){
+      this.doctorToUpdate = this.doctorList.find(doctor => doctor.id == idSelected) as Doctor;
+      await this._specialtyService.loadSpecialties()
+      .subscribe((response: Specialty[]) => {
+        this.specialitySelect = response
+       })
+    }
+    this.showModal = !this.showModal;
+  }
+
+
 }

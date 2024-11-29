@@ -18,6 +18,9 @@ export class SpecialtiesComponent {
   pages = 0;
   pageIdx = 1;
 
+  showModal:boolean = false;
+  specialtiesToUpdate: Specialty = {} as Specialty;
+  
   constructor(
     private _specialtyService: SpecialtyService,
     private _authService: AuthService,
@@ -55,5 +58,12 @@ export class SpecialtiesComponent {
   showContentPage(pageIdx: number): Specialty[] {
     this.pageIdx = pageIdx;
     return this.specialtiesList.slice((this.pageIdx - 1) * 5, this.pageIdx * 5);
+  }
+
+  toggleModal(idSelected?: number) {
+    if(idSelected) {
+      this.specialtiesToUpdate = this.specialtiesList.find(specialties => specialties.id === idSelected) as Specialty;
+    }
+    this.showModal = !this.showModal;
   }
 }
