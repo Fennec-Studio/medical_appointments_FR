@@ -1,3 +1,183 @@
-<div class="w-full bg-navbarBlue h-10"><a routerLink="/login">Iniciar sesión</a></div>
+<div class="flex flex-col h-screen w-full">
+  <div class="w-full bg-navbarBlue p-2 flex items-center justify-end">
+    <a routerLink="/login" class="bg-secondaryGreen text-white px-4 py-2 rounded text-sm">Iniciar sesión</a>
+  </div>
 
-<h2 class="text-4xl">En construcción.</h2>
+  <div class="w-full h-full p-8">
+    <div
+      class="container mx-auto bg-white p-7 flex flex-col justify-start space-y-6">
+      <div>
+        <h3 class="text-4xl font-bold text-slate-700">Genera tu nueva cita</h3>
+        <p class="text-base text-slate-400">Rellena todos los campos para reservar tu cita médica.</p>
+      </div>
+
+      <div class="flex flex-col space-y-4">
+        <div class="flex flex-row w-full space-x-4">
+          <div class="w-full">
+            <label for="curp" class="text-sm font-medium text-gray-900">Clave Única de Registro de Población (CURP)</label>
+            <input
+              [(ngModel)]="curp"
+              type="text"
+              name="curp"
+              id="curp"
+              class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingresa tu CURP" required />
+            <label for="curp" class="text-xs text-gray-400">¿No te sabes tu CURP? <span class="underline italic">Consúltala aquí</span></label>
+          </div>
+          <div class="w-full">
+            <label for="first_name" class="text-sm font-medium text-gray-900">Apellidos</label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              [(ngModel)]="last_name"
+              class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingresa tus apellidos completos" required />
+          </div>
+          <div class="w-full">
+            <label for="first_name" class="text-sm font-medium text-gray-900">Nombre(s)</label>
+            <input
+              type="text"
+              name="first_name"
+              [(ngModel)]="first_name"
+              id="first_name"
+              class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingresa tu nombre completo" required />
+          </div>
+        </div>
+
+        <div class="flex flex-row w-full space-x-4">
+          <div class="w-7/12">
+            <label for="comms_preference" class="text-sm font-medium text-gray-900">Medio de comunicación</label>
+            <select id="comms_preference" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+              <option value="whatsapp">Whatsapp</option>
+              <option value="email">Correo electrónico</option>
+            </select>
+          </div>
+          <div class="w-full">
+            <label for="phone" class="text-sm font-medium text-gray-900">Número de teléfono</label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              [(ngModel)]="phone"
+              class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingresa tu número de teléfono" required />
+          </div>
+          <div class="w-full">
+            <label for="email" class="text-sm font-medium text-gray-900">Correo electrónico</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              [(ngModel)]="email"
+              class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Ingresa tu correo electrónico" required />
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full flex flex-col space-y-2">
+        <p class="text-sm font-medium text-gray-900">Localiza a tu médico/especialista</p>
+        <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input
+              [(ngModel)]="search"
+              (input)="searchMedicOrSpecialty()"
+              name="search" type="search" id="search_doctor"
+              class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Buscar médico/especialidad" required />
+        </div>
+
+        <div>
+          <p class="text-sm text-slate-600">Filtrar resultados:</p>
+          <div class="flex flex-row justify-start space-x-4 select-none">
+            <div>
+              <label
+                (click)="toggleFilterSelector()"
+                [ngClass]="{'border-blue-600 hover:text-gray-600 text-gray-600 hover:bg-gray-50': filterByMedic}"
+                for="medic_filter" class="inline-flex items-center justify-between w-full px-4 py-1 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">
+                  <div class="flex flex-row space-x-2 items-center">
+                    <svg class="w-4 h-4 text-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg>
+                    <span>Médico</span>
+                  </div>
+              </label>
+            </div>
+            <div>
+              <label
+              (click)="toggleFilterSelector()"
+                [ngClass]="{'border-blue-600 hover:text-gray-600 text-gray-600 hover:bg-gray-50': !filterByMedic}"
+                for="specialty_select"
+                class="inline-flex items-center justify-between w-full px-4 py-1 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer hover:text-gray-600 hover:bg-gray-50">
+                  <div class="flex flex-row space-x-2">
+                    <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M4 6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h11.613a2 2 0 0 0 1.346-.52l4.4-4a2 2 0 0 0 0-2.96l-4.4-4A2 2 0 0 0 15.613 6H4Z"/>
+                    </svg>
+                    <span>Especialidad</span>
+                  </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <span  class="text-sm text-slate-600">{{ filterByMedic ? 'Lista de Médicos' : 'Lista de especialidades'}}</span>
+
+          @if (searchResults.length > 0) {
+            <div class="flex flex-col w-full h-36 max-h-36 overflow-auto">
+              @for (resultItem of searchResults; track $index; let lastItem = $last, e = $even, idx = $index) {
+                <div
+                  [ngClass]="{'border-b': !lastItem}"
+                  class="w-full flex flex-row space-x-2 p-2 items-center hover:bg-blue-200 cursor-pointer">
+
+                  @if(filterByMedic) {
+                    <svg class="w-8 h-8 text-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg>
+                  } @else {
+                    <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M4 6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h11.613a2 2 0 0 0 1.346-.52l4.4-4a2 2 0 0 0 0-2.96l-4.4-4A2 2 0 0 0 15.613 6H4Z"/>
+                    </svg>
+                  }
+
+                  <div class="flex flex-col -space-y-1 w-full max-w-[450px]">
+                    <p class="font-medium text-gray-800">{{ filterByMedic ? (resultItem.first_name + " " + resultItem.last_name) : (resultItem.name | uppercase) }}</p>
+                    <p class="text-xs text-gray-600">{{ filterByMedic ? (resultItem.speciality | uppercase) : ("Médicos: " + resultItem.doctors)  }}</p>
+                  </div>
+
+                  @if(filterByMedic) {
+                    <div class="flex flex-row space-x-2">
+                      @for (schedule of resultItem.schedule; track $index) {
+                        <div
+                            (click)="selectSchedule(resultItem['id'], $index)"
+                            [ngClass]="{
+                              'bg-green-200 border-green-300 hover:bg-green-300 hover:font-semibold': schedule.available && !schedule.selected,
+                              'bg-gray-200 border-gray-300 text-gray-400 cursor-not-allowed': !schedule.available,
+                              'bg-blue-600 text-white': schedule.selected,
+                              'text-gray-800': !schedule.selected
+                            }"
+                            class="px-2 py-1 rounded cursor-pointer">
+                          {{ schedule.time }}
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          } @else {
+              @if (search.length == 0) {
+                <p class="text-sm text-gray-700 mt-2">Cargando...</p>
+              } @else {
+                <p class="text-sm text-gray-700 mt-2">No se encontraron resultados</p>
+              }
+          }
+        </div>
+      </div>
+
+      <div class="flex justify-end ">
+        <button
+          (click)="submitForm()"
+          type="button" class="w-full bg-primaryBlue hover:bg-secondaryBlue text-white px-4 py-2 rounded text-sm">Reservar cita</button>
+      </div>
+    </div>
+  </div>
+</div>
+

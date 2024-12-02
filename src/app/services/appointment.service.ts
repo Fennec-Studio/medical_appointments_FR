@@ -18,8 +18,16 @@ export class AppointmentService {
     );
   }
 
+  storeAppointment(appointment: Appointment): Observable<any> {
+    return this._httpClient.post(environment.API_URL + 'appointments', appointment)
+      .pipe((map((response) => {
+        return response;
+      }))
+    );
+  }
+
   updateAppointmentStatus(appointment: Appointment): Observable<any> {
-    return this._httpClient.put(environment.API_URL + 'appointments/' + appointment.id + '/status', appointment)
+    return this._httpClient.post(environment.API_URL + 'appointments/' + appointment.id + '/status', appointment)
       .pipe((map((response) => {
         return response;
       }))

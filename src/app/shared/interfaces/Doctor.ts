@@ -11,6 +11,7 @@ export interface Doctor {
   created_at: Date;
   updated_at: Date;
   speciality?: string;
+  schedule: Schedule[];
 }
 
 interface Speciality {
@@ -19,4 +20,10 @@ interface Speciality {
   description: string;
   created_at: Date;
   updated_at: Date;
+}
+
+interface Schedule {
+  time: string;
+  available: boolean;
+  selected?: boolean;
 }

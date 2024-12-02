@@ -35,7 +35,7 @@
                     {{ appointment.doctor?.first_name }} {{ appointment.doctor?.last_name }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ appointment.date }}
+                    {{ appointment.date | dateFixed }} {{ appointment.date | timeFixed }}
                 </td>
                 <td class="px-6 py-4">
                   <span
