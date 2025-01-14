@@ -17,4 +17,12 @@ export class SpecialtyService {
       }))
     );
   }
+
+  updateSpecialty(specialty: Specialty): Observable<any> {
+    return this._httpClient.put(environment.API_URL + 'specialties/' + specialty.id, specialty)
+      .pipe((map((response) => {
+        return response;
+      }))
+    );
+  }
 }

@@ -18,4 +18,12 @@ export class DoctorService {
       }))
     );
   }
+
+  updateDoctor(doctor: Doctor): Observable<any> {
+    return this._httpClient.put(environment.API_URL + 'doctors/' + doctor.id, doctor)
+      .pipe((map((response) => {
+        return response;
+      }))
+    );
+  }
 }

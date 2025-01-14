@@ -4,12 +4,14 @@ import { SpecialtyService } from '../../services/specialty.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-specialties',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
   ],
   templateUrl: './specialties.component.html'
 })
@@ -20,7 +22,7 @@ export class SpecialtiesComponent {
 
   showModal:boolean = false;
   specialtiesToUpdate: Specialty = {} as Specialty;
-  
+
   constructor(
     private _specialtyService: SpecialtyService,
     private _authService: AuthService,
@@ -65,5 +67,19 @@ export class SpecialtiesComponent {
       this.specialtiesToUpdate = this.specialtiesList.find(specialties => specialties.id === idSelected) as Specialty;
     }
     this.showModal = !this.showModal;
+  }
+
+  submitFormUpdate() {
+
+    this._specialtyService.updateSpecialty(this.specialtiesToUpdate)
+      .subscribe((response) => {
+        console.log(response)
+        if(response.status === 200) {
+          this.retrieveData();
+          this.toggleModal();
+        } else {
+          alert('Error updating Specialty');
+        }
+      })
   }
 }

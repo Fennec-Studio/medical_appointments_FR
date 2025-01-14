@@ -7,23 +7,23 @@ export interface Patient {
   email: string;
   phone: string;
   address: string;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
   medical_history?: MedicalHistory;
 }
 
 export interface MedicalHistory {
-  id: number;
+  id?: number;
   patient_id: number;
-  age: number;
-  gender: string;
-  height: number;
-  weight: number;
-  blood_type: string;
-  allergies: string;
-  medications: string;
-  created_at: string;
-  updated_at: string;
+  age?: number;
+  gender?: string;
+  height?: number;
+  weight?: number;
+  blood_type?: string;
+  allergies?: string;
+  medications?: string;
+  created_at?: string;
+  updated_at?: string;
 
 
 }

@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import { Patient } from '../../shared/interfaces/Patient';
+import { Patient, MedicalHistory } from '../../shared/interfaces/Patient';
 import { PatientService } from '../../services/patient.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { DateFixedPipe } from '../../pipes/datesFixed.pipe';
 
 @Component({
   selector: 'app-patients',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    DateFixedPipe,
   ],
   templateUrl: './patients.component.html'
 })
@@ -19,7 +23,32 @@ export class PatientsComponent {
   pageIdx = 1;
 
   showModal:boolean = false;
-  patientToUpdate:Patient = {} as Patient;
+  showModalOnView:boolean = false;
+  patientToUpdate:Patient = {
+    id: 0,
+    curp: '',
+    first_name: '',
+    last_name: '',
+    birthdate: new Date(),
+    email: '',
+    phone: '',
+    address: '',
+    created_at: '',
+    updated_at: '',
+    medical_history: {
+      id: 0,
+      patient_id: 0,
+      age: 0,
+      blood_type: '',
+      allergies: '',
+      medications: '',
+      gender: '',
+      height: 0,
+      weight: 0,
+      created_at: '',
+      updated_at: '',
+    } as MedicalHistory,
+  } as Patient;
 
   constructor(
     private _patientService: PatientService,
@@ -61,10 +90,39 @@ export class PatientsComponent {
   }
 
   toggleModal(idSelected?: number) {
-    if(idSelected){
-      this.patientToUpdate = this.patientList.find(patient => patient.id == idSelected) as Patient;
+    if (idSelected) {
+      const selectedPatient = this.patientList.find(patient => patient.id === idSelected);
+      if (selectedPatient) {
+        this.patientToUpdate = {
+          ...selectedPatient,
+          medical_history: selectedPatient.medical_history || {
+            patient_id: selectedPatient.id,
+            age: 0,
+            blood_type: '',
+            allergies: '',
+            medications: '',
+            gender: '',
+            height: 0,
+            weight: 0,
+            created_at: '',
+            updated_at: '',
+          }
+        };
+      }
     }
     this.showModal = !this.showModal;
+  }
+
+  onSubmitFormUpdate() {
+    this._patientService.updatePatient(this.patientToUpdate)
+      .subscribe((response) => {
+        if(response.status === 200) {
+          this.retrieveData();
+          this.toggleModal();
+        } else {
+          alert('Error updating patient');
+        }
+      });
   }
 
   async deletePatient(id: number) {

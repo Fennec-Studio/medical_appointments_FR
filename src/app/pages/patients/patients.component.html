@@ -45,25 +45,28 @@
                 </td>
                 <td class="flex flex-row space-x-2 px-6 py-2">
                   <button
+                    (click)="showModalOnView = true;"
+                    (click)="toggleModal(patient.id)"
                     type="button" title="Ver información del paciente" class="text-white bg-primaryGreen hover:bg-secondaryGreen focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 text-center inline-flex items-center">
                     <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
                       <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                     </svg>
                   </button>
-                  <button type="button" title="Imprimir información del paciente" class="text-sm p-2 text-center inline-flex items-center text-white bg-sky-300 hover:bg-sky-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg">
+                  <button
+                    type="button" title="Imprimir información del paciente" class="text-sm p-2 text-center inline-flex items-center text-white bg-sky-300 hover:bg-sky-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg">
                     <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z"/>
                     </svg>
                   </button>
-                  <button 
+                  <button
                     (click)="toggleModal(patient.id)"
                     type="button" title="Modificar información del paciente" class="text-sm p-2 text-center inline-flex items-center text-white bg-orange-300 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg">
                     <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
                     </svg>
                   </button>
-                  <button 
+                  <button
                     (click)="deletePatient(patient.id)"
                     type="button" title="Eliminar información del paciente" class="text-sm p-2 text-center inline-flex items-center text-white bg-red-400 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg">
                     <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -110,111 +113,196 @@
   <div
     [ngClass]="{'hidden': !showModal}"
     class="w-full bg-black bg-opacity-70 h-screen z-50 fixed inset-0 flex items-center">
-    <div class="container mx-auto flex flex-col space-y-4 bg-white max-w-4xl h-auto rounded-md p-4">
-      <div class="flex justify-between items-center">
-        <h2 class="text-2xl font-IBM font-semibold">Editar información del paciente</h2>
-        <button
-          (click)="toggleModal()"
-          class="text-white hover:bg-gray-300 border font-medium rounded-lg p-2 flex items-center">
-            <svg class="w-6 h-6 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-            </svg>
-        </button>
-      </div>
-
-      <div class="flex flex-row space-x-4">
-        <div class="w-full">
-          <label for="firstName_patient" class="block mb-1 text-sm font-medium text-gray-900">Apellidos paciente</label>
-          <input type="text" id="firstName_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese los apellidos del paciente" [value]="patientToUpdate.last_name">
+    @if (showModalOnView) {
+      <div
+        class="container mx-auto flex flex-col space-y-4 bg-white max-w-4xl h-auto rounded-md p-4">
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-IBM font-semibold">Historial médico del paciente</h2>
+          <span
+            (click)="toggleModal()"
+            class="text-white hover:bg-gray-300 border font-medium rounded-lg p-2 flex items-center">
+              <svg class="w-6 h-6 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+              </svg>
+          </span>
         </div>
-        <div class="w-full">
-          <label for="lastName_patient" class="block mb-1 text-sm font-medium text-gray-900">Nombre(s) paciente</label>
-          <input type="text" id="lastName_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese nombre(s) del paciente" [value]="patientToUpdate.first_name">
-        </div>
-      </div>
-
-      <div class="flex flex-row space-x-4">
-        <div class="w-full">
-          <label for="mail_patient" class="block mb-1 text-sm font-medium text-gray-900">Email paciente</label>
-          <input type="email" id="mail_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese el email del paciente" [value]="patientToUpdate.email">
-        </div>
-        <div class="w-full">
-          <label for="phone_patient" class="block mb-1 text-sm font-medium text-gray-900">Número de celular paciente</label>
-          <input type="tel" id="phone_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese el número de celular del paciente" [value]="patientToUpdate.phone">
-        </div>
-      </div>
-
-      <div class="flex flex-row space-x-4">
-        <div class="w-full">
-          <label for="curp_patient" class="block mb-1 text-sm font-medium text-gray-900">Clave Única de Registro de Población (CURP)</label>
-          <input type="text" id="curp_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese CURP del paciente" [value]="patientToUpdate.curp">
-        </div>
-        <div class="w-full">
-          <label for="date" class="block mb-1 text-sm font-medium text-gray-900">Fecha cumpleaños</label>
-          <div class="relative">
-              <input
-                [value]="patientToUpdate.birthdate"
-                type="date" id="date" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
+        <hr>
+        <div class="flex flex-col space-y-4">
+          <div class="flex flex-row ">
+            <div class="w-full">
+              <p>Clave Única de Registro de Población (CURP):</p>
+              <p class="font-semibold">{{ patientToUpdate.curp }}</p>
+            </div>
+            <div class="w-full">
+              <p>Nombre completo:</p>
+              <p class="font-semibold">{{ patientToUpdate.first_name }} {{ patientToUpdate.last_name }}</p>
+            </div>
+          </div>
+          <div class="flex flex-row">
+            <div class="w-full">
+              <p>Correo electrónico:</p>
+              <p class="font-semibold">{{ patientToUpdate.email }}</p>
+            </div>
+            <div class="w-full">
+              <p>Número de celular:</p>
+              <p class="font-semibold">{{ patientToUpdate.phone }}</p>
+            </div>
+          </div>
+          <div class="flex flex-row">
+            <div class="w-full">
+              <p>Fecha de nacimiento:</p>
+              <p class="font-semibold">{{ patientToUpdate.birthdate | dateFixed}}</p>
+            </div>
+            <div class="w-full">
+              <p>Género:</p>
+              <p class="font-semibold">{{ patientToUpdate.medical_history?.gender }}</p>
+            </div>
+            <div class="w-full">
+              <p>Edad:</p>
+              <p class="font-semibold">{{ patientToUpdate.medical_history?.age }}</p>
+            </div>
+          </div>
+          <hr>
+          <h2 class="text-1xl font-IBM font-semibold">Historial médico</h2>
+          <div class="flex flex-row">
+            <div class="w-full">
+              <p>Altura:</p>
+              <p class="font-semibold">{{ patientToUpdate.medical_history?.height }}</p>
+            </div>
+            <div class="w-full">
+              <p>Peso:</p>
+              <p class="font-semibold">{{ patientToUpdate.medical_history?.weight }}</p>
+            </div>
+            <div class="w-full">
+              <p>Tipo de sangre:</p>
+              <p class="font-semibold">{{ patientToUpdate.medical_history?.blood_type }}</p>
+            </div>
+          </div>
+          <div class="flex flex-row">
+            <div class="w-full">
+              <p>Alergías:</p>
+              <p class="font-semibold">{{ patientToUpdate.medical_history?.allergies }}</p>
+            </div>
+            <div class="w-full">
+              <p>Medicaciones:</p>
+              <p class="font-semibold">{{ patientToUpdate.medical_history?.medications }}</p>
+            </div>
+            <div class="w-full">
+              <p>Fecha registro:</p>
+              <p class="font-semibold">{{ patientToUpdate.created_at! | dateFixed }}</p>
+            </div>
           </div>
         </div>
       </div>
+    } @else {
+      <form
+        (submit)="onSubmitFormUpdate()"
+        class="container mx-auto flex flex-col space-y-4 bg-white max-w-4xl h-auto rounded-md p-4">
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-IBM font-semibold">Editar información del paciente</h2>
+          <span
+            (click)="toggleModal()"
+            class="text-white hover:bg-gray-300 border font-medium rounded-lg p-2 flex items-center">
+              <svg class="w-6 h-6 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+              </svg>
+          </span>
+        </div>
 
-      <hr>
-      <h2 class="text-1xl font-IBM font-semibold">Historial médico</h2>
+        <div class="flex flex-row space-x-4">
+          <div class="w-full">
+            <label for="lastName_patient" class="block mb-1 text-sm font-medium text-gray-900">Apellidos paciente</label>
+            <input type="text" [(ngModel)]="patientToUpdate.last_name" name="last_name" id="lastName_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese los apellidos del paciente" [value]="patientToUpdate.last_name">
+          </div>
+          <div class="w-full">
+            <label for="firstName_patient" class="block mb-1 text-sm font-medium text-gray-900">Nombre(s) paciente</label>
+            <input type="text" [(ngModel)]="patientToUpdate.first_name" name="first_name" id="firstName_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese nombre(s) del paciente" [value]="patientToUpdate.first_name">
+          </div>
+        </div>
 
-      <div class="flex flex-row space-x-4">
-        <div class="w-full">
-          <label for="age_patient" class="block mb-1 text-sm font-medium text-gray-900">Edad paciente</label>
-          <input type="text" id="age_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese la edad del paciente" [value]="patientToUpdate.medical_history?.age">
+        <div class="flex flex-row space-x-4">
+          <div class="w-full">
+            <label for="mail_patient" class="block mb-1 text-sm font-medium text-gray-900">Email paciente</label>
+            <input type="email" [(ngModel)]="patientToUpdate.email" name="email" id="mail_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese el email del paciente" [value]="patientToUpdate.email">
+          </div>
+          <div class="w-full">
+            <label for="phone_patient" class="block mb-1 text-sm font-medium text-gray-900">Número de celular paciente</label>
+            <input type="tel" [(ngModel)]="patientToUpdate.phone" name="phone" id="phone_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese el número de celular del paciente" [value]="patientToUpdate.phone">
+          </div>
         </div>
-        <div class="w-full">
-          <label for="height_patient" class="block mb-1 text-sm font-medium text-gray-900">Altura paciente</label>
-          <input type="text" id="height_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese la altura del paciente" [value]="patientToUpdate.medical_history?.height">
-        </div>
-        <div class="w-full">
-          <label for="weight_patient" class="block mb-1 text-sm font-medium text-gray-900">Peso paciente</label>
-          <input type="text" id="weight_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese el peso del paciente" [value]="patientToUpdate.medical_history?.weight">
-        </div>
-      </div>
 
-      <div class="flex flex-row space-x-4">
-        <div class="w-full">
-          <label for="blood_patient" class="block mb-1 text-sm font-medium text-gray-900">Tipo de sangre paciente</label>
-          <input type="text" id="blood_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese el tipo de sangre del paciente" [value]="patientToUpdate.medical_history?.blood_type">
+        <div class="flex flex-row space-x-4">
+          <div class="w-full">
+            <label for="curp_patient" class="block mb-1 text-sm font-medium text-gray-900">Clave Única de Registro de Población (CURP)</label>
+            <input type="text" [(ngModel)]="patientToUpdate.curp" name="curp" id="curp_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese CURP del paciente" [value]="patientToUpdate.curp">
+          </div>
+          <div class="w-full">
+            <label for="date" class="block mb-1 text-sm font-medium text-gray-900">Fecha cumpleaños</label>
+            <div class="relative">
+                <input
+                  [(ngModel)]="patientToUpdate.birthdate" name="birthdate"
+                  [value]="patientToUpdate.birthdate"
+                  type="date" id="date" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
+            </div>
+          </div>
         </div>
-        <div class="w-full">
-          <label for="allergies_patient" class="block mb-1 text-sm font-medium text-gray-900">Alergías paciente</label>
-          <input type="text" id="allergies_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese las alergías del paciente" [value]="patientToUpdate.medical_history?.allergies">
-        </div>
-        <div class="w-full">
-          <label for="medications_patient" class="block mb-1 text-sm font-medium text-gray-900">Medicaciones paciente</label>
-          <input type="text" id="medications_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese las medicaciones del paciente" [value]="patientToUpdate.medical_history?.medications">
-        </div>
-      </div>
 
-      <div class="flex flex-row space-x-4">
-        <div class="w-full">
-          <label for="gender_patient" class="block mb-1 text-sm font-medium text-gray-900">Género paciente</label>
-          <select id="gender_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" [value]="patientToUpdate.medical_history?.gender">
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-          </select>
+        <hr>
+        <h2 class="text-1xl font-IBM font-semibold">Historial médico</h2>
+
+        <div class="flex flex-row space-x-4">
+          <div class="w-full">
+            <label for="age_patient" class="block mb-1 text-sm font-medium text-gray-900">Edad paciente</label>
+            <input type="text" [(ngModel)]="patientToUpdate.medical_history!.age" name="age"  id="age_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese la edad del paciente" [value]="patientToUpdate.medical_history?.age">
+          </div>
+          <div class="w-full">
+            <label for="height_patient" class="block mb-1 text-sm font-medium text-gray-900">Altura paciente</label>
+            <input type="text" [(ngModel)]="patientToUpdate.medical_history!.height" name="height" id="height_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese la altura del paciente" [value]="patientToUpdate.medical_history?.height">
+          </div>
+          <div class="w-full">
+            <label for="weight_patient" class="block mb-1 text-sm font-medium text-gray-900">Peso paciente</label>
+            <input type="text" [(ngModel)]="patientToUpdate.medical_history!.weight" name="weight" id="weight_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese el peso del paciente" [value]="patientToUpdate.medical_history?.weight">
+          </div>
         </div>
-      </div>
 
-      <div class="flex flex-row justify-end space-x-4">
-        <button
-          (click)="toggleModal()"
-          type="button" class="text-red-600 border-red-600 hover:bg-red-500 hover:text-white border font-medium rounded-lg text-sm px-5 py-2.5">
-          Cancelar
-        </button>
-        <button
-          (click)="toggleModal()"
-          type="button" class="text-white bg-sky-800 hover:bg-sky-500 font-medium rounded-lg text-sm px-5 py-2.5">
-          Guardar
-        </button>
-      </div>
+        <div class="flex flex-row space-x-4">
+          <div class="w-full">
+            <label for="blood_patient" class="block mb-1 text-sm font-medium text-gray-900">Tipo de sangre paciente</label>
+            <input type="text" [(ngModel)]="patientToUpdate.medical_history!.blood_type" name="blood_type" id="blood_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese el tipo de sangre del paciente" [value]="patientToUpdate.medical_history?.blood_type">
+          </div>
+          <div class="w-full">
+            <label for="allergies_patient" class="block mb-1 text-sm font-medium text-gray-900">Alergías paciente</label>
+            <input type="text" [(ngModel)]="patientToUpdate.medical_history!.allergies" name="allergies" id="allergies_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese las alergías del paciente" [value]="patientToUpdate.medical_history?.allergies">
+          </div>
+          <div class="w-full">
+            <label for="medications_patient" class="block mb-1 text-sm font-medium text-gray-900">Medicaciones paciente</label>
+            <input type="text" [(ngModel)]="patientToUpdate.medical_history!.medications" name="medications" id="medications_patient" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ingrese las medicaciones del paciente" [value]="patientToUpdate.medical_history?.medications">
+          </div>
+        </div>
 
-    </div>
+        <div class="flex flex-row space-x-4">
+          <div class="w-full">
+            <label for="gender_patient" class="block mb-1 text-sm font-medium text-gray-900">Género paciente</label>
+            <select id="gender_patient" [(ngModel)]="patientToUpdate.medical_history!.gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" [value]="patientToUpdate.medical_history?.gender">
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-row justify-end space-x-4">
+          <button
+            (click)="toggleModal()"
+            type="button" class="text-red-600 border-red-600 hover:bg-red-500 hover:text-white border font-medium rounded-lg text-sm px-5 py-2.5">
+            Cancelar
+          </button>
+          <button
+            type="submit" class="text-white bg-sky-800 hover:bg-sky-500 font-medium rounded-lg text-sm px-5 py-2.5">
+            Guardar
+          </button>
+        </div>
+
+      </form>
+    }
   </div>
 }

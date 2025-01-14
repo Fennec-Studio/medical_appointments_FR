@@ -25,4 +25,12 @@ export class PatientService {
       }))
     );
   }
+
+  updatePatient(patient: Patient): Observable<any> {
+    return this._httpClient.put(environment.API_URL + 'patients/' + patient.id, patient)
+      .pipe((map((response) => {
+        return response;
+      }))
+    );
+  }
 }

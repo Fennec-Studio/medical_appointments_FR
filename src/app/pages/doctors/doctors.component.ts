@@ -6,12 +6,14 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SpecialtyService } from '../../services/specialty.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-doctors',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
   ],
   templateUrl: './doctors.component.html'
 })
@@ -75,5 +77,16 @@ export class DoctorsComponent {
     this.showModal = !this.showModal;
   }
 
+  submitFormUpdate() {
+    this._doctorService.updateDoctor(this.doctorToUpdate)
+      .subscribe((response) => {
+        if(response.status === 200) {
+          this.retrieveData();
+          this.toggleModal();
+        } else {
+          alert('Error updating doctor');
+        }
+      })
+  }
 
 }
